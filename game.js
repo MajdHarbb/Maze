@@ -1,22 +1,17 @@
 
 window.onload = function () {
-    //var reds = document.getElementsByClassName("boundary");
 
-    /*for(var i=0; i<reds.length;i++){
-            reds[i].style.backgroundColor = "red";
-            console.log(i);
-    }*/
-
-    var classname = document.getElementsByClassName("boundary");
-
-    var myFunction = function () {
-        alert("hey");
+    var walls = document.getElementsByClassName("boundary");
+    // if cursor is over a wall --> change maze background (class youlose)
+    for (var i = 0; i < walls.length-1; i++) {
+        walls[i].addEventListener("mouseover", function myFunction () {
         
-    };
-
-    for (var i = 0; i < classname.length; i++) {
-        classname[i].addEventListener("mouseover", myFunction);
+            for (var i = 0; i < walls.length-1; i++)
+                walls[i].className += " youlose";
+    
+        });
     }
+    //end 
 
 
 
