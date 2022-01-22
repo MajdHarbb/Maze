@@ -8,7 +8,9 @@ window.onload = function () {
         
             for (var i = 0; i < walls.length-1; i++)
                 walls[i].className += " youlose";
-    
+                document.getElementById("status").innerHTML = "You Lost :(";
+                document.getElementsByClassName("example")[0].innerHTML = "Your Score -10";
+
         });
     }
     //end 
