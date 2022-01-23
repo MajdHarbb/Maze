@@ -1,13 +1,19 @@
 
 window.onload = function () {
 
+
+    
     score = 0;
     var walls = document.getElementsByClassName("boundary");
+
     document.getElementById("start").addEventListener("mouseover",ResetHover);
+    document.getElementById("start").addEventListener("mouseleave",ResetHover);
     document.getElementById("start").addEventListener("click",ResetClick);
     document.getElementById("end").addEventListener("mouseover", YouWon);
 
 
+
+    
 
     // if cursor is over a wall --> change maze background (class youlose)
     
@@ -51,11 +57,12 @@ window.onload = function () {
     // when hovering Start ---> remove red background
     function ResetHover() {
 
+        document.getElementById("status").innerHTML = "Beat the Maze, don't touch the walls!";
         for (var i = 0; i < walls.length - 1; i++) {
             walls[i].classList.remove("youlose");
             walls[i].classList.remove("youwon");
         }
-        document.getElementById("status").innerHTML = "New Round";
+        
 
 
     }
