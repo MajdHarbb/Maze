@@ -1,85 +1,92 @@
-
 window.onload = function () {
 
-
-    
-    score = 0;
+    var score = 0;
+    var scores = document.getElementsByClassName("example")[0];
     var walls = document.getElementsByClassName("boundary");
+    var game = document.getElementById("game");
 
-    document.getElementById("start").addEventListener("mouseover",ResetHover);
-    document.getElementById("start").addEventListener("mouseleave",ResetHover);
-    document.getElementById("start").addEventListener("click",ResetClick);
+    // Lose if the curses touches a wall
+    for (var i = 0; i < walls.length - 1; i++) {
+        walls[i].addEventListener("mouseover", YouLost);
+    }
+
+    // Win if the cursor reaches E
     document.getElementById("end").addEventListener("mouseover", YouWon);
 
+    // start when cursor passes the S  
+    document.getElementById("start").addEventListener("mouseover", ResetHover);
+    document.getElementById("start").addEventListener("mouseleave", ResetHover);
+    document.getElementById("start").addEventListener("click", ResetClick);
 
+    // Making sure that the player won't cheat (don't count a win unless cursor is inside the maze)
+    game.addEventListener("mouseleave", outOfBound);
 
-    
+    //scoring system
+    scores.innerHTML = score;
 
-    // if cursor is over a wall --> change maze background (class youlose)
-    
-    for (var i = 0; i < walls.length - 1; i++) {
-        
-        walls[i].addEventListener("mouseover", YouLost,false);
-
-    }
-    //end 
-
-
-    // +10 points to the old score
-    function YouWon(){
-        
-        score = score +10;
-        document.getElementById("status").innerHTML = "You Won! :) +5 points ";
-        document.getElementsByClassName("example")[0].innerHTML = score;
-        for(var i = 0; i < walls.length-1; i++){
-            walls[i].className += " youwon";
-        }
-
-    }
-    //end function YouWon()
-    
-    // --> append "youlose" class, -10 score
-    function YouLost() {
-
-
-        var local_score = 0;
-        for (var i = 0; i < walls.length - 1; i++) {
-            walls[i].className += " youlose";            
-        }
-        document.getElementById("status").innerHTML = "You Lost :( -10 points";
-        local_score = score - 10 ;
-        score = local_score;
-        document.getElementsByClassName("example")[0].innerHTML = score;
-
-    }
-    //end function YouLost()
-
-    // when hovering Start ---> remove red background
+    // Hover to reset colors and start a new round with keeping the score 
     function ResetHover() {
 
-        document.getElementById("status").innerHTML = "Beat the Maze, don't touch the walls!";
+        document.getElementById("status").innerText = "Beat the game! Don't hit the walls.";
         for (var i = 0; i < walls.length - 1; i++) {
             walls[i].classList.remove("youlose");
             walls[i].classList.remove("youwon");
         }
-        
-
 
     }
-    // end function
-    
 
-    // -10 points and play again with keeping the score
-    function ResetClick(){
-        ResetHover();
+    // click to reset everything 
+    function ResetClick() {
         score = 0;
-        document.getElementById("status").innerHTML = "Begin by moving your mouse over the \"S\" ";
-        document.getElementsByClassName("example")[0].innerHTML = "";
+        document.getElementById("status").innerText = "Begin by moving your mouse over the \"S\".";
+        scores.innerHTML = score;
 
     }
-    //end function
 
+    // change background to red and -10 pts
+    function YouLost() {
+        if (document.getElementById("status").innerText != "Stay inside the maze!"
+            && document.getElementById("status").innerText != "You Lost :( -10 point"
+            && document.getElementById("status").innerText != "You Won! :) +5 points") {
+            for (var i = 0; i < walls.length - 1; i++) {
+                walls[i].classList.add("youlose");
+
+            }
+            document.getElementById("status").innerText = "You Lost :( -10 point";
+
+            score = score - 10;
+            scores.innerHTML = score;
+        }
+    }
+
+    // change background to green, add 5 pts
+    function YouWon() {
+        if (document.getElementById("status").innerText != "Stay inside the maze!"
+            && document.getElementById("status").innerText != "You Lost :( -10 point"
+            && document.getElementById("status").innerText != "You Won! :) +5 points") {
+                for (var i = 0; i < walls.length - 1; i++) {
+                    walls[i].className += " youwon";
+    
+                }
+            document.getElementById("status").innerText = "You Won! :) +5 points";
+            score = score + 5;
+            scores.innerHTML = score;
+        }
+
+    }
+
+    function check() {
+        if (document.getElementById("status").innerText != "You Lost :( -10 point"
+            && document.getElementById("status").innerText != "You Won! :) +5 points"
+            && document.getElementById("status").innerText != "Stay inside the maze!") {
+            return true;
+        }
+    }
+
+    function outOfBound() {
+        document.getElementById("status").innerText = "Stay inside the maze!";
+
+    }
 
 
 }
-
