@@ -31,6 +31,7 @@ window.onload = function () {
         for (var i = 0; i < walls.length - 1; i++) {
             walls[i].classList.remove("youlose");
             walls[i].classList.remove("youwon");
+            walls[i].style.backgroundColor = "";
         }
 
     }
@@ -40,7 +41,6 @@ window.onload = function () {
         score = 0;
         document.getElementById("status").innerText = "Begin by moving your mouse over the \"S\".";
         scores.innerHTML = score;
-
     }
 
     // change background to red and -10 pts
@@ -50,10 +50,8 @@ window.onload = function () {
             && document.getElementById("status").innerText != "You Won! :) +5 points") {
             for (var i = 0; i < walls.length - 1; i++) {
                 walls[i].classList.add("youlose");
-
             }
             document.getElementById("status").innerText = "You Lost :( -10 point";
-
             score = score - 10;
             scores.innerHTML = score;
         }
@@ -66,6 +64,7 @@ window.onload = function () {
             && document.getElementById("status").innerText != "You Won! :) +5 points") {
                 for (var i = 0; i < walls.length - 1; i++) {
                     walls[i].className += " youwon";
+                    green();
     
                 }
             document.getElementById("status").innerText = "You Won! :) +5 points";
@@ -75,13 +74,21 @@ window.onload = function () {
 
     }
 
-    function check() {
+    function green() {
+        var elements = document.getElementsByClassName('youwon'); // get all elements
+        for(var i = 0; i < elements.length; i++){
+            elements[i].style.backgroundColor = "green";
+        }
+    }
+
+    /*function check() {
         if (document.getElementById("status").innerText != "You Lost :( -10 point"
             && document.getElementById("status").innerText != "You Won! :) +5 points"
             && document.getElementById("status").innerText != "Stay inside the maze!") {
             return true;
         }
     }
+    */
 
     function outOfBound() {
         document.getElementById("status").innerText = "Stay inside the maze!";
